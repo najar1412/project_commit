@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Client</h1>
+
+{{data}}
+<hr>
+<div>
+        {% for column, value in data.0.items() %}
+        
+        {% if column == 'projects' %}
+        {% if column|length > 0 %}
+        <h4>Projects</h4>
+        <hr>
+        {% for project in value %}
+        {{project}}<br>
+        {% endfor %}
+        
+        {% endif %}
+        {% else %}
+        {{column}} - {{value}}<br>
+        {% endif %}
+        
+        {% endfor %}
+        </div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+{{data}}
+<hr>
+<br>
+<br>
+{% for table, table_data in data.items() %}
+
+{% if table == 'client' %}
+<h1>Client</h1>
+{% if table_data|length > 0 %}
+<div>
+<a href="/{{table}}/{{table_data.0.id}}">{{table_data.0}}</a>
+</div>
+{% endif %}
+
+{% elif table == 'clients' %}
+<h1>Clients</h1>
+{% for row in table_data %}
+<div>
+<a href="/client/{{row.id}}">{{row}}</a>
+</div>
+{% endfor %}
+
+{% elif table == 'project' %}
+<h1>Project</h1>
+{% if table_data|length > 0 %}
+<div>
+<a href="/project/{{table_data.0.id}}">{{table_data.0}}</a>
+</div>
+{% endif %}
+
+{% elif table == 'projects' %}
+<h1>Projects</h1>
+{% for row in table_data %}
+<div>
+<a href="/project/{{row.id}}">{{row}}</a>
+</div>
+{% endfor %}
+
+{% elif table == 'user' %}
+<h1>User</h1>
+{% if table_data|length > 0 %}
+<div>
+<a href="/user/{{table_data.0.id}}">{{table_data.0}}</a>
+</div>
+{% endif %}
+
+{% elif table == 'users' %}
+<h1>Users</h1>
+{% for row in table_data %}
+<div>
+<a href="/user/{{row.id}}">{{row}}</a>
+</div>
+{% endfor %}
+
+{% elif table == 'commit' %}
+<h1>Commit</h1>
+{% if table_data|length > 0 %}
+<div>
+<a href="/commit/{{table_data.0.id}}">{{table_data.0}}</a>
+</div>
+{% endif %}
+
+{% elif table == 'commits' %}
+<h1>Commits</h1>
+{% for row in table_data %}
+<div>
+<a href="/commit/{{row.id}}">{{row}}</a>
+</div>
+{% endfor %}
+
+
+{% endif %}
+
+
+<hr>
+{% endfor %}
+
+{% endblock %}
