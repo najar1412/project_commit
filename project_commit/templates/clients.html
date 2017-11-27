@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Clients</h1>
+
+{% for client in data %}
+<div>
+    {{client}}
+</div>
+
+<br>
+{% endfor %}
+
+{% endblock %}

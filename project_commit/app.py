@@ -17,12 +17,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///temp_db.db'
 db = SQLAlchemy(app)
 
 # models
-# TODO: Many to many needed?
-#leads = db.Table('user',
-#    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
-#    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
-#)
-
 class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -43,10 +37,7 @@ class Project(db.Model):
 
     commits = db.relationship('Commit',
         backref=db.backref('Project', lazy=True))
-    
-    #TODO: lead:[USER:ID]
-    #leads = db.relationship('User', secondary=leads, lazy='subquery',
-    #    backref=db.backref('projects', lazy=True))
+
 
     def __repr__(self):
         return '<Project %r>' % self.id
@@ -84,6 +75,7 @@ db.create_all()
 
 @app.route('/')
 def index():
+    # module.func.populate_db(db)
     data = {
         'client': module.func.client_get(1),
         'clients': module.func.client_all(),
@@ -97,6 +89,36 @@ def index():
 
 
     return render_template('index.html', data=data)
+
+
+
+@app.route('/client')
+def clients():
+    data = module.func.client_all()
+
+    return render_template('clients.html', data=data)
+
+
+@app.route('/project')
+def projects():
+    data = module.func.project_all()
+
+    return render_template('projects.html', data=data)
+
+
+@app.route('/user')
+def users():
+    data = module.func.user_all()
+
+    return render_template('users.html', data=data)
+
+
+@app.route('/commit')
+def commits():
+    data = module.func.commit_all()
+
+    return render_template('commits.html', data=data)
+
 
 
 @app.route('/client/<int:id>')
@@ -141,4 +163,4 @@ def get_current_user():
 
 if __name__ == "__main__":
     # app = create_app(config.DATABASE_URI, debug=True)
-    app.run()
+    app.run(debug=True)
