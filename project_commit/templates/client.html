@@ -1,26 +1,79 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Client</h1>
 
-{{data}}
-<hr>
-<div>
-        {% for column, value in data.0.items() %}
+<div style="display:flex">
+    <div style="width: 200px;">
+        <img style="border-radius: 5px;background-color: lightgray;width:150px; height:150px;">
+        [Title]<br>
+        <h3>{{data.0.name}}</h3>
+        [Tag]
+        <br>
+        <br>
+        [Location]
+    </div>
         
-        {% if column == 'projects' %}
-        {% if column|length > 0 %}
-        <h4>Projects</h4>
+    <div style="width:100%;">
+
+        <small><a href="">Projects</a>, <a href="">Commits</a></small>
         <hr>
-        {% for project in value %}
-        {{project}}<br>
-        {% endfor %}
-        
-        {% endif %}
-        {% else %}
-        {{column}} - {{value}}<br>
-        {% endif %}
-        
-        {% endfor %}
+
+        <!-- Projects !-->
+        <div>
+            <h4>Projects</h4>
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                                
+                    <p class="card-text">
+                       {% for commit in data.0.commits %}
+                       <a href="/project/{{commit.project_id}}">{{commit.project_id}}</a><br>
+                       {% endfor %}
+                    </p>
+                </div>
+            </div>
         </div>
+
+        <!-- commits !-->
+        <div>
+            {% for column, value in data.0.items() %}
+            
+            {% if column == 'commits' %}
+            {% if column|length > 0 %}
+
+            <h4>Commits</h4>
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                                
+                    <p class="card-text">
+                    {% for commit in value %}
+                    <a href="/commit/{{commit.id}}">{{commit.id}}</a><br>
+                    {% endfor %}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        
+        <div>
+                <h4>Activity</h4>
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                                    
+                        <p class="card-text">
+                            # TODO:
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+    </div> 
+</div>
+
+<hr>
+
+        <small>{{data}}</small>
+
 
 {% endblock %}

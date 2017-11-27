@@ -2,12 +2,50 @@
 {% block content %}
 <h1>Projects</h1>
 
+
+<small>Active</small>
+<!-- active projects !-->
 {% for project in data %}
-<div>
-    {{project}}
-</div>
+{% if project.expired == False %}
+
+<div class="card" style="width: 100%;">
+        <div class="card-body">
+                <h5 class="card-title"><a href="/project/{{project.id}}">{{project.name}}</a></h5>
+                        
+            <p class="card-text">
+
+                    {{project}}
+
+
+            </p>
+        </div>
+    </div>
+
+{% endif %}
+{% endfor %}
 
 <br>
+<small>Expired</small>
+<!-- expired projects !-->
+{% for project in data %}
+{% if project.expired == True %}
+
+<div class="card" style="width: 100%;">
+        <div class="card-body">
+                <h5 class="card-title"><a href="/project/{{project.id}}">{{project.name}}</a></h5>
+                        
+            <p class="card-text">
+
+                    {{project}}
+
+
+            </p>
+        </div>
+    </div>
+    <br>
+
+{% endif %}
 {% endfor %}
+
 
 {% endblock %}

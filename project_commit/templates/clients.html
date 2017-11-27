@@ -2,12 +2,26 @@
 {% block content %}
 <h1>Clients</h1>
 
+<!-- active client !-->
 {% for client in data %}
-<div>
-    {{client}}
-</div>
 
+<div class="card" style="width: 100%;">
+        <div class="card-body">
+                <h5 class="card-title"><a href="/client/{{client.id}}">{{client.name}}</a></h5>
+                        
+            <p class="card-text">
+
+                    {{client}}
+
+
+            </p>
+        </div>
+    </div>
 <br>
 {% endfor %}
+
+
+
+
 
 {% endblock %}

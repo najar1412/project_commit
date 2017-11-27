@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Commit</h1>
-
-{{data}}
+<h1>{{data.0.id}}</h1>
 <hr>
 
 {% for column, value in data.0.items() %}
 {{column}} - {{value}}<br>
 {% endfor %}
+
+<hr>
+<small>{{data}}</small>
 
 {% endblock %}

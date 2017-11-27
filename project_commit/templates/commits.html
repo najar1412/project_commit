@@ -4,8 +4,9 @@
 
 {% for commit in data %}
 <div>
-    {{commit}}
-</div>
+        <h3>#<a href="/commit/{{commit.id}}">{{commit.id}}</a></h3>
+        {{commit}}
+    </div>
 
 <br>
 {% endfor %}

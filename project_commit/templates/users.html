@@ -4,10 +4,11 @@
 
 {% for user in data %}
 <div>
-    {{user}}
-</div>
+    <h3><a href="/user/{{user.id}}">{{user.name}}</a></h3>
+        {{user}}
+    </div>
 
-<br>
+
 {% endfor %}
 
 {% endblock %}

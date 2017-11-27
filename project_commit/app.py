@@ -1,6 +1,9 @@
+import datetime
+import sqlite3
+
 from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3
+
 import module.func
 
 
@@ -17,6 +20,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///temp_db.db'
 db = SQLAlchemy(app)
 
 # models
+
+# TODO:
+## commit types
+## reference, comment, deliverable
+
+
 class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -30,7 +39,8 @@ class Client(db.Model):
 
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    expired = db.Column(db.String)
+    name = db.Column(db.String)
+    expired = db.Column(db.Boolean, default=False)
 
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'),
         nullable=False)
@@ -60,6 +70,10 @@ class Commit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     working_files = db.Column(db.String)
     deliverable = db.Column(db.String)
+    subdate = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    commit_type = db.Column(db.String)
+    commit_round = db.Column(db.Integer, default=1)
+    expired = db.Column(db.Boolean, default=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
@@ -87,9 +101,7 @@ def index():
         'commits': module.func.commit_all()
     }
 
-
     return render_template('index.html', data=data)
-
 
 
 @app.route('/client')
@@ -118,7 +130,6 @@ def commits():
     data = module.func.commit_all()
 
     return render_template('commits.html', data=data)
-
 
 
 @app.route('/client/<int:id>')

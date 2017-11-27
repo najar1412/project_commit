@@ -10,6 +10,7 @@ def scheme_project(row):
 
     return {
         'id': row.id,
+        'name': row.name,
         'expired': row.expired,
         'client_id': row.client_id,
         'commits': commits
@@ -30,13 +31,17 @@ def scheme_user(row):
 
 
 def scheme_commit(row):
-    
+
     return {
         'id': row.id,
         'working_files': row.working_files,
         'deliverable': row.deliverable,
         'project_id': row.project_id,
-        'user_id': row.user_id
+        'user_id': row.user_id,
+        'subdate': row.subdate,
+        'commit_type': row.commit_type,
+        'commit_round': row.commit_round,
+        'expired': row.expired
     }
 
 
@@ -54,18 +59,45 @@ def scheme_client(row):
 
 def populate_db(db):
     # project
-    new_project = app.Project(expired='expiring soon', client_id=1)
-    # user
-    new_user = app.User(name='new name')
-    # client
-    new_client = app.Client(name='new client')
-    # commit
-    new_commit = app.Commit(working_files='project files', deliverable='project handoffs', user_id=1, project_id=1)
+    new_project_one = app.Project(name='114 Big freaking building', client_id=1)
+    new_project_two = app.Project(name='255 shacksville', expired=True, client_id=2)
+    new_project_three = app.Project(name='255 shacksville', expired=True, client_id=2)
 
-    db.session.add(new_project)
-    db.session.add(new_user)
-    db.session.add(new_client)
-    db.session.add(new_commit)
+    db.session.add(new_project_one)
+    db.session.add(new_project_two)
+    db.session.add(new_project_three)
+
+    # user
+    new_user_one = app.User(name='Dave Dave')
+    new_user_two = app.User(name='Nigel Nigel')
+    new_user_three = app.User(name='Billy Billy')
+
+    db.session.add(new_user_one)
+    db.session.add(new_user_two)
+    db.session.add(new_user_three)
+
+    # client
+    new_client_one = app.Client(name='Howdy Hughes')
+    new_client_two = app.Client(name='Divided')
+    new_client_three = app.Client(name='Gang of four')
+
+    db.session.add(new_client_one)
+    db.session.add(new_client_two)
+    db.session.add(new_client_three)
+
+    # commit
+    new_commit_one = app.Commit(working_files='project files', deliverable='deliv_01_.jpg', expired=False, commit_type='deliverable', user_id=1, project_id=1)
+    new_commit_two = app.Commit(working_files='project files', deliverable='deliv_01_.jpg', expired=False, commit_type='comment', user_id=2, project_id=1)
+    new_commit_three = app.Commit(working_files='project files', deliverable='deliv_02_.jpg', expired=False, commit_type='deliverable', user_id=3, project_id=1)
+    new_commit_four = app.Commit(working_files='project files', deliverable='project handoffs', expired=False, commit_type='comment', user_id=2, project_id=2)
+    new_commit_five = app.Commit(working_files='project files', deliverable='project handoffs', expired=True, commit_type='reference', user_id=3, project_id=1)
+    new_commit_six = app.Commit(working_files='project files', deliverable='bla bla', expired=True, commit_type='comment', user_id=2, project_id=1)
+
+    db.session.add(new_commit_one)
+    db.session.add(new_commit_two)
+    db.session.add(new_commit_three)
+    db.session.add(new_commit_four)
+    db.session.add(new_commit_five)
 
     db.session.commit()
 
