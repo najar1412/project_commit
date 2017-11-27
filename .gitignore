@@ -1,0 +1,33 @@
+# Credentials_Secrets
+cred.py
+config.ini
+
+# setup.py junk
+.eggs/
+glance.egg-info/
+build/
+dist/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+tests/sqlite_test_database.db
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# vs code stuff
+.vscode/
