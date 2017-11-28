@@ -89,7 +89,7 @@ db.create_all()
 
 @app.route('/')
 def index():
-    # module.func.populate_db(db)
+    module.func.populate_db(db)
     data = {
         'client': module.func.client_get(1),
         'clients': module.func.client_all(),

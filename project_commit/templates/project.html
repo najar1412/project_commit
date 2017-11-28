@@ -22,6 +22,8 @@
         <div class="card-body">
                         
             <p class="card-text">
+
+
                 {% for commit in data.0.commits %}
                 {% if commit.commit_type == 'deliverable' %}
                 <div style="display: inline-block; border-radius: 5px; width:150px; height:150px;overflow:hidden;">
@@ -34,6 +36,20 @@
         </div>
     </div>
     <br>
+
+    <h5>Contributed</h5>
+    <div class="card" style="width: 100%;">
+            <div class="card-body">
+                            
+                <p class="card-text">
+                    {% for commit in data.0.commits %}
+                    {{commit.user_id.name}}<br>
+                    {% endfor %}
+    
+                </p>
+            </div>
+        </div>
+        <br>
 
 <h5>Latest Commits</h5>
 <div class="card" style="width: 100%;">
@@ -59,7 +75,7 @@
                 {% if commit.expired == False %}
                     <tr>
                     <th scope="row"><a href="/commit/{{commit.id}}">{{commit.id}}</a></th>
-                    <td><a href="/user/{{commit.user_id}}">{{commit.user_id}}</a></td>
+                    <td><a href="/user/{{commit.user_id.id}}">{{commit.user_id.name}}</a></td>
                     <td>{{commit.subdate}}</td>
                     <td>{{commit.commit_type}}</td>
                     <td>{{commit.commit_round}}</td>
@@ -77,21 +93,23 @@
     </div>
 </div>
 <br>
-    <h5>Reference</h5>
-    <div class="card" style="width: 100%;">
-            <div class="card-body">
-                            
-                <p class="card-text">
-                
-                        <img style="border-radius: 5px;background-color: lightgray;width:150px; height:150px;">
-                        <img style="border-radius: 5px;background-color: lightgray;width:150px; height:150px;">
-                        <img style="border-radius: 5px;background-color: lightgray;width:150px; height:150px;">
-                        <img style="border-radius: 5px;background-color: lightgray;width:150px; height:150px;">
-    
-                </p>
-            </div>
+<h5>Reference</h5>
+<div class="card" style="width: 100%;">
+        <div class="card-body">
+                        
+            <p class="card-text">
+                {% for commit in data.0.commits %}
+                {% if commit.commit_type == 'reference' %}
+                <div style="display: inline-block; border-radius: 5px; width:150px; height:150px;overflow:hidden;">
+                    <a href="{{ url_for('static', filename=commit.deliverable) }}"><img src="{{ url_for('static', filename=commit.deliverable) }}"></a>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+            </p>
         </div>
-        <br>
+    </div>
+    <br>
 
 
 
@@ -126,7 +144,7 @@
                         {% if commit.commit_type == 'comment' and commit.expired == False %}
                             <tr>
                             <th scope="row"><a href="/commit/{{commit.id}}">{{commit.id}}</a></th>
-                            <td><a href="/user/{{user_id}}">{{commit.user_id}}</a></td>
+                            <td><a href="/user/{{commit.user_id.id}}">{{commit.user_id.name}}</a></td>
                             <td>{{commit.subdate}}</td>
                             <td>{{commit.commit_type}}</td>
                             <td>{{commit.commit_round}}</td>
@@ -175,7 +193,7 @@
                             {% if commit.commit_type == 'comment' and commit.expired == True %}
                                 <tr>
                                 <th scope="row"><a href="/commit/{{commit.id}}">{{commit.id}}</a></th>
-                                <td><a href="/user/{{user_id}}">{{commit.user_id}}</a></td>
+                                <td><a href="/user/{{commit.user_id.id}}">{{commit.user_id.name}}</a></td>
                                 <td>{{commit.subdate}}</td>
                                 <td>{{commit.commit_type}}</td>
                                 <td>{{commit.commit_round}}</td>

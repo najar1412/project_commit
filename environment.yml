@@ -3,12 +3,9 @@ channels:
 - defaults
 dependencies:
 - pip=9.0.1
-- python=3.6.3
-- setuptools=36.5.0
-- sqlite=3.20.1
-- wheel=0.30.0
-- xz=5.2.3
-- zlib=1.2.11
+- python
+- sqlite
+- wheel
 - pip:
   - click==6.7
   - flask==0.12.2
