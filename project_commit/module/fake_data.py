@@ -13,10 +13,11 @@ def populate_jpg():
 
 def user_jpg():
     jpg = [
-        'deliv_01_.jpg',
-        'deliv_02_.jpg',
-        'deliv_03_.jpg',
-        'deliv_04_.jpg',
+        'pers_01_.jpg',
+        'pers_02_.jpg',
+        'pers_03_.jpg',
+        'pers_04_.jpg',
+        'pers_05_.jpg'
     ]
 
     return random.choice(jpg)

@@ -56,6 +56,7 @@ class Project(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
+    picture = db.Column(db.String, default='default_user.jpg')
 
     commits = db.relationship('Commit',
         backref=db.backref('User', lazy=True))
@@ -89,7 +90,7 @@ db.create_all()
 
 @app.route('/')
 def index():
-    module.func.populate_db(db)
+    # module.func.populate_db(db)
     data = {
         'client': module.func.client_get(1),
         'clients': module.func.client_all(),
@@ -150,8 +151,8 @@ def project(id):
 
 @app.route('/user/<int:id>')
 def user(id):
+    # user data
     data = module.func.user_get(id)
-
 
     return render_template('user.html', data=data)
 
