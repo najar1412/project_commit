@@ -75,6 +75,7 @@ class Commit(db.Model):
     commit_type = db.Column(db.String)
     commit_round = db.Column(db.Integer, default=1)
     expired = db.Column(db.Boolean, default=False)
+    note = db.Column(db.String)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
@@ -136,6 +137,15 @@ def commits():
 @app.route('/client/<int:id>')
 def client(id):
     data = module.func.client_get(id)
+
+    # relational data
+    # projects
+    projects = []
+    for project in data[0]['projects']:
+        raw_project = Project.query.filter_by(id=project.id).first()
+        projects.append(module.func.scheme_project(raw_project))
+
+    data[0]['projects'] = projects
 
 
     return render_template('client.html', data=data)

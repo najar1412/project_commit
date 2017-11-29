@@ -22,12 +22,51 @@
             <h4>Projects</h4>
             <div class="card" style="width: 100%;">
                 <div class="card-body">
-                                
-                    <p class="card-text">
-                       {% for commit in data.0.commits %}
-                       <a href="/project/{{commit.project_id}}">{{commit.project_id}}</a><br>
-                       {% endfor %}
-                    </p>
+
+                    Active
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            
+                                {% for project in data.0.projects %}
+                                {% if project.expired == False %}
+                                <tr>
+                                <th scope="row"><a href="/project/{{project.id}}">{{project.id}}</a></th>
+                                <td>{{project.name}}</td>
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+            
+                        </tbody>
+                    </table>
+
+                    Expired
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            
+                                {% for project in data.0.projects %}
+                                {% if project.expired == True %}
+                                <tr>
+                                <th scope="row"><a href="/project/{{project.id}}">{{project.id}}</a></th>
+                                <td>{{project.name}}</td>
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+            
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>

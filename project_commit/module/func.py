@@ -36,7 +36,8 @@ def scheme_commit(row):
         'subdate': row.subdate,
         'commit_type': row.commit_type,
         'commit_round': row.commit_round,
-        'expired': row.expired
+        'expired': row.expired,
+        'note': row.note
     }
 
 
@@ -55,7 +56,6 @@ def populate_db(db):
         new_user = app.User(name=module.fake_data.user_name(), picture=module.fake_data.user_jpg())
         db.session.add(new_user)
     db.session.commit()
-
 
     # client
     num_of_clients = 10
@@ -83,7 +83,8 @@ def populate_db(db):
             commit_type=random.choice(['reference', 'comment', 'deliverable']), 
             user_id=random.choice([1, 2, 3, 4, 5]), 
             project_id=random.choice(range(num_of_projects)),
-            commit_round=random.choice([1, 2, 3])
+            commit_round=random.choice([1, 2, 3]),
+            note=module.fake_data.commit_note()
         )
         db.session.add(new_commit)
 
