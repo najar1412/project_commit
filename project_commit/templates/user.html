@@ -68,11 +68,10 @@
 
 
 
-                    <table class="table table-hover">
+                    <table class="table table-sm table-hover">
                             <thead>
                                 <tr>
                                 <th scope="col">id</th>
-                                <th scope="col">user</th>
                                 <th scope="col">date</th>
                                 <th scope="col">type</th>
                                 <th scope="col">round</th>
@@ -88,7 +87,6 @@
                                 {% if commit.expired == False %}
                                     <tr>
                                     <th scope="row"><a href="/commit/{{commit.id}}">{{commit.id}}</a></th>
-                                    <td><a href="/user/{{commit.user_id.id}}">{{commit.user_id.name}}</a></td>
                                     <td>{{commit.subdate}}</td>
                                     <td>{{commit.commit_type}}</td>
                                     <td>{{commit.commit_round}}</td>

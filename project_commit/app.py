@@ -161,6 +161,7 @@ def project(id):
     for user in data[0]['commits']:
         if user['user_id'] not in user_ids:
             user_ids.append(user['user_id'])
+            
             raw_user = User.query.filter_by(id=user['user_id']).first()
             if raw_user != None:
                 users.append(module.func.scheme_user(raw_user))
@@ -171,12 +172,9 @@ def project(id):
     # add replace commit:user_id with scheme_user()
     for commit in data[0]['commits']:
         if commit['user_id'] in user_ids:
-            print('yes')
-            print(commit['user_id'])
             for user in data[0]['users']:
                 if user['id'] == commit['user_id']:
-                    print(user['name'])
-                    commit['user_id'] = {'id': commit['id'], 'name': user['name']}
+                    commit['user_id'] = {'id': user['id'], 'name': user['name']}
 
     # client
     client = {}
