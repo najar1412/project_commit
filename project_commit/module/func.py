@@ -8,72 +8,31 @@ import module.fake_data
 
 # helpers
 def scheme_project(row):
-    commits = []
-    client = {}
-    for commit in row.commits:
-        commits.append(scheme_commit(commit))
-
-    raw_client = app.Client.query.filter_by(id=row.client_id).first()
-    if raw_client:
-        client = {
-            'id': raw_client.id,
-            'name': raw_client.name
-        }
-        
     return {
         'id': row.id,
         'name': row.name,
         'expired': row.expired,
-        'client_id': client,
-        'commits': commits
+        'client_id': row.client_id,
+        'commits': row.commits
     }
 
 
-def scheme_user(row, basic=False):
-    if basic == False:
-        commits = []
-        for commit in row.commits:
-            commits.append(scheme_commit(commit))
-
-        return {
-            'id': row.id,
-            'name': row.name,
-            'commits': commits,
-            'picture': row.picture
-        }
-    else:
-        return {
-            'id': row.id,
-            'name': row.name,
-            'picture': row.picture
-        }
+def scheme_user(row):
+    return {
+        'id': row.id,
+        'name': row.name,
+        'commits': row.commits,
+        'picture': row.picture
+    }
 
 
 def scheme_commit(row):
-    # get user
-    user_row = app.User.query.filter_by(id=row.user_id).first()
-    user = {
-        'id': user_row.id,
-        'name': user_row.name,
-        'picture': user_row.picture
-    }
-    # get project
-    project = {}
-    project_row = app.Project.query.filter_by(id=row.project_id).first()
-    
-    if project_row != None:
-        project = {
-            'id': project_row.id,
-            'name': project_row.name,
-            'expired': project_row.expired,
-        }
-
     return {
         'id': row.id,
         'working_files': row.working_files,
         'deliverable': row.deliverable,
-        'project_id': project,
-        'user_id': user,
+        'project_id': row.project_id,
+        'user_id':row.user_id,
         'subdate': row.subdate,
         'commit_type': row.commit_type,
         'commit_round': row.commit_round,
@@ -82,14 +41,10 @@ def scheme_commit(row):
 
 
 def scheme_client(row):
-    projects = []
-    for project in row.projects:
-        projects.append(scheme_project(project))
-
     return {
         'id': row.id,
         'name': row.name,
-        'projects': projects
+        'projects': row.projects
     }
 
 

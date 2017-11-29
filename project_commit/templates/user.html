@@ -36,10 +36,10 @@
                             </thead>
                             <tbody>
                 
-                                    {% for commit in data.0.commits %}
+                                    {% for project in data.0.projects %}
                                     <tr>
-                                    <th scope="row"><a href="/project/{{commit.project_id.id}}">{{commit.project_id.id}}</a></th>
-                                    <td>{{commit.project_id.name}}</td>
+                                    <th scope="row"><a href="/project/{{project.id}}">{{project.id}}</a></th>
+                                    <td>{{project.name}}</td>
                                     </tr>
                             {% endfor %}
                 

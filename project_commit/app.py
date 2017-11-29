@@ -143,7 +143,46 @@ def client(id):
 
 @app.route('/project/<int:id>')
 def project(id):
+    # get base project data
     data = module.func.project_get(id)
+
+    # append relational
+    # commits
+    commits = []
+    user_ids = []
+    users = []
+    for commit in data[0]['commits']:
+        raw_commit = Commit.query.filter_by(id=commit.id).first()
+        commits.append(module.func.scheme_commit(raw_commit))
+
+    data[0]['commits'] = commits
+
+    # user (only works if commits have been processed)
+    for user in data[0]['commits']:
+        if user['user_id'] not in user_ids:
+            user_ids.append(user['user_id'])
+            raw_user = User.query.filter_by(id=user['user_id']).first()
+            if raw_user != None:
+                users.append(module.func.scheme_user(raw_user))
+
+    data[0]['users'] = users
+
+    # commit
+    # add replace commit:user_id with scheme_user()
+    for commit in data[0]['commits']:
+        if commit['user_id'] in user_ids:
+            print('yes')
+            print(commit['user_id'])
+            for user in data[0]['users']:
+                if user['id'] == commit['user_id']:
+                    print(user['name'])
+                    commit['user_id'] = {'id': commit['id'], 'name': user['name']}
+
+    # client
+    client = {}
+    raw_client = Client.query.filter_by(id=data[0]['client_id']).first()
+    if raw_client:
+         data[0]['client_id'] = module.func.scheme_client(raw_client)
 
 
     return render_template('project.html', data=data)
@@ -154,12 +193,47 @@ def user(id):
     # user data
     data = module.func.user_get(id)
 
+    # append relational
+    # commits
+    commits = []
+    project_ids = []
+    projects = []
+    for commit in data[0]['commits']:
+        raw_commit = Commit.query.filter_by(id=commit.id).first()
+        commits.append(module.func.scheme_commit(raw_commit))
+
+    data[0]['commits'] = commits
+
+    # projects (only works if commits have been processed)
+    for commit in data[0]['commits']:
+        if commit['project_id'] not in project_ids:
+            project_ids.append(commit['project_id'])
+            raw_project = Project.query.filter_by(id=commit['project_id']).first()
+            if raw_project != None:
+                projects.append(module.func.scheme_project(raw_project))
+
+    data[0]['projects'] = projects
+
+
     return render_template('user.html', data=data)
 
 
 @app.route('/commit/<int:id>')
 def commit(id):
     data = module.func.commit_get(id)
+
+    # append relational
+    # user
+    user = {}
+    raw_user = User.query.filter_by(id=data[0]['user_id']).first()
+    if raw_user:
+         data[0]['user_id'] = module.func.scheme_user(raw_user)
+
+    # project
+    project = {}
+    raw_project = Project.query.filter_by(id=data[0]['project_id']).first()
+    if raw_project:
+        data[0]['project_id'] = module.func.scheme_project(raw_project)
 
 
     return render_template('commit.html', data=data)
